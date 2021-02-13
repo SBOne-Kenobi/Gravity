@@ -10,6 +10,6 @@ include_directories(include)
 add_executable(Gravity src/main.cpp
         include/Scene.hpp include/Object.hpp
         src/Engine.cpp include/Engine.hpp
-        include/Environment.hpp src/Scene.cpp src/Object.cpp)
+        include/Environment.hpp src/Scene.cpp src/Object.cpp src/RenderComponent.cpp include/RenderComponent.hpp)
 
 target_link_libraries(Gravity sfml-graphics sfml-audio)

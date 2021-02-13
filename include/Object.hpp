@@ -7,9 +7,11 @@
 
 namespace gravityEngine {
 
+  class Object;
+
   class ObjectComponent {
   public:
-    virtual void update() = 0;
+    virtual void update(Object *) = 0;
   };
 
   class Object {

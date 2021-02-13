@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "Scene.hpp"
 #include "Environment.hpp"
+#include "RenderComponent.hpp"
 
 namespace gravityEngine {
 
@@ -19,9 +20,7 @@ namespace gravityEngine {
 
     void update();
     void draw();
-    void loadScene(std::unique_ptr<Scene> sc);
     void input();
-
     Engine();
 
   public:
@@ -29,6 +28,8 @@ namespace gravityEngine {
     static std::shared_ptr<Engine> getEngine();
 
     int execute();
+
+    void loadScene(std::unique_ptr<Scene> sc);
 
   };
 

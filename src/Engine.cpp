@@ -21,7 +21,15 @@ void gravityEngine::Engine::update() {
 }
 
 void gravityEngine::Engine::draw() {
-  window.clear(sf::Color::White);
+  window.clear(sf::Color::Black);
+
+  if (scene) {
+    auto renderer = scene->getComponent<RenderComponent>();
+    if (renderer) {
+      window.draw(*renderer);
+    }
+  }
+
   window.display();
 }
 
@@ -35,6 +43,7 @@ int gravityEngine::Engine::execute() {
     input();
     update();
     draw();
+    sf::sleep(sf::milliseconds(500));
   }
 
   return 0;

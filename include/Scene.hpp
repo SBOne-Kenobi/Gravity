@@ -8,17 +8,21 @@
 
 namespace gravityEngine {
 
+  class Scene;
+
   class SceneComponent {
   public:
-    virtual void update() = 0;
+    virtual void update(Scene *) = 0;
 
     virtual ~SceneComponent() = default;
   };
 
   class Scene {
   private:
+
     std::vector<std::unique_ptr<SceneComponent>> components;
     std::vector<std::unique_ptr<Object>> objects;
+
   public:
     void addComponent(std::unique_ptr<SceneComponent> component);
 
@@ -38,6 +42,8 @@ namespace gravityEngine {
     void addObject(std::unique_ptr<Object> object);
 
     void update();
+
+    std::vector<std::unique_ptr<Object>> &getObjects();
   };
 
 }

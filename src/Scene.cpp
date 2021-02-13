@@ -10,5 +10,9 @@ void gravityEngine::Scene::addObject(std::unique_ptr<Object> object) {
 
 void gravityEngine::Scene::update() {
   for (auto &component : components)
-    component->update();
+    component->update(this);
+}
+
+std::vector<std::unique_ptr<gravityEngine::Object>> &gravityEngine::Scene::getObjects() {
+  return objects;
 }

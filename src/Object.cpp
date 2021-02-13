@@ -6,5 +6,5 @@ void gravityEngine::Object::addComponent(std::unique_ptr<ObjectComponent> compon
 
 void gravityEngine::Object::update() {
   for (auto &component : components)
-    component->update();
+    component->update(this);
 }
