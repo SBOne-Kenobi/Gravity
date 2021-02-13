@@ -24,7 +24,13 @@ namespace gravityEngine {
     std::vector<std::unique_ptr<Object>> objects;
 
   public:
-    void addComponent(std::unique_ptr<SceneComponent> component);
+    template<class T,
+            std::enable_if_t<std::is_base_of<SceneComponent, T>::value, bool> = true
+    >
+    T *addComponent(std::unique_ptr<T> component) {
+      components.push_back(std::move(component));
+      return dynamic_cast<T *>(components.back().get());
+    }
 
     template<class T,
             std::enable_if_t<std::is_base_of<SceneComponent, T>::value, bool> = true
@@ -39,7 +45,7 @@ namespace gravityEngine {
       return nullptr;
     }
 
-    void addObject(std::unique_ptr<Object> object);
+    Object *addObject(std::unique_ptr<Object> object);
 
     void update();
 

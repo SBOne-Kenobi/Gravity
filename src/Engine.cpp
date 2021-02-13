@@ -1,6 +1,7 @@
 #include "Engine.hpp"
 
 std::shared_ptr<gravityEngine::Engine> gravityEngine::Engine::engine = nullptr;
+sf::Time gravityEngine::Engine::delta_time = sf::seconds(0);
 
 std::shared_ptr<gravityEngine::Engine> gravityEngine::Engine::getEngine() {
   if (!engine) {
@@ -39,11 +40,14 @@ void gravityEngine::Engine::loadScene(std::unique_ptr<gravityEngine::Scene> sc) 
 
 int gravityEngine::Engine::execute() {
 
+  sf::Clock clock;
+
   while (window.isOpen()) {
+    delta_time = clock.restart();
+
     input();
     update();
     draw();
-    sf::sleep(sf::milliseconds(500));
   }
 
   return 0;

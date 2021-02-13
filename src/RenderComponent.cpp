@@ -10,9 +10,11 @@ void gravityEngine::RenderComponent::draw(sf::RenderTarget &target, sf::RenderSt
   if (parent) {
     auto &objects = parent->getObjects();
     for (auto &obj : objects) {
-      auto renderer = obj->getComponent<RenderObjectComponent>();
-      if (renderer) {
-        target.draw(*renderer, states);
+      if (obj) {
+        auto renderer = obj->getComponent<RenderObjectComponent>();
+        if (renderer) {
+          target.draw(*renderer, states);
+        }
       }
     }
   }

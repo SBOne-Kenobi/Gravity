@@ -14,6 +14,7 @@ namespace gravityEngine {
   private:
 
     static std::shared_ptr<Engine> engine;
+    static sf::Time delta_time;
 
     sf::RenderWindow window;
     std::unique_ptr<Scene> scene;
