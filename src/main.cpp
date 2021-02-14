@@ -16,6 +16,7 @@ int main() {
   engine->loadScene(
           std::make_unique<Scene>(createScene())
   );
+  engine->setShowFPS(true);
 
   return engine->execute();
 }

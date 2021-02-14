@@ -17,11 +17,24 @@ namespace gravityEngine {
     static sf::Time delta_time;
 
     sf::RenderWindow window;
+    sf::Color background_color = sf::Color::Black;
+
     std::unique_ptr<Scene> scene;
 
+    bool show_FPS = false;
+    sf::Text fps_text;
+    sf::Font fps_font;
+    size_t fps_size = 20;
+    sf::Color fps_color = sf::Color::White;
+    int fps_style = sf::Text::Bold;
+    sf::Vector2f fps_position;
+
     void update();
+
     void draw();
+
     void input();
+
     Engine();
 
   public:
@@ -31,6 +44,10 @@ namespace gravityEngine {
     int execute();
 
     void loadScene(std::unique_ptr<Scene> sc);
+
+    unsigned int getFPS() const;
+
+    void setShowFPS(bool show);
 
   };
 
