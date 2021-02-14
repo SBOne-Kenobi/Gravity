@@ -24,9 +24,10 @@ namespace gravityEngine {
     bool show_FPS = false;
     sf::Text fps_text;
     sf::Font fps_font;
+    std::string fps_font_file = "arial.ttf";
     size_t fps_size = 20;
     sf::Color fps_color = sf::Color::White;
-    int fps_style = sf::Text::Bold;
+    bool fps_bold = false;
     sf::Vector2f fps_position;
 
     void update();

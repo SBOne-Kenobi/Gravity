@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Utils.hpp>
 #include "Engine.hpp"
 
 std::shared_ptr<gravityEngine::Engine> gravityEngine::Engine::engine = nullptr;
@@ -16,14 +17,14 @@ gravityEngine::Engine::Engine() :
         window(sf::VideoMode(WIDTH, HEIGHT), NAME, STYLE),
         scene(nullptr) {
 
-  if (!fps_font.loadFromFile("arial.ttf")) {
+  if (!fps_font.loadFromFile(fps_font_file)) {
     std::cerr << "Fail loading fps_font!" << std::endl;
   }
 
   fps_text.setFont(fps_font);
   fps_text.setCharacterSize(fps_size);
   fps_text.setFillColor(fps_color);
-  fps_text.setStyle(fps_style);
+  fps_text.setStyle(fps_bold ? sf::Text::Bold : sf::Text::Regular);
 
 }
 
@@ -76,20 +77,12 @@ void gravityEngine::Engine::draw() {
   }
 
   if (show_FPS) {
-
     auto fps = std::to_string(getFPS());
 
-    auto get_advance = [this](char c) {
-      return fps_font.getGlyph(c, fps_size, true).advance;
-    };
-
-    int len = 0;
-    for (auto c : fps)
-      len += get_advance(c);
-
+    //left down position
     fps_position = {WIDTH, HEIGHT};
-    fps_position -= sf::Vector2f(len, fps_size);
-    fps_position -= {10, 10};
+    fps_position -= getTextRect(fps, fps_font, fps_size, fps_bold);
+    fps_position -= {7, 10}; //bound
 
     fps_text.setPosition(fps_position);
     fps_text.setString(fps);
