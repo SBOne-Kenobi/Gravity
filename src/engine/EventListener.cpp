@@ -1,4 +1,4 @@
-#include "EventListener.hpp"
+#include "engine/EventListener.hpp"
 
 gravityEngine::EventListener::EventListener(std::function<void(const sf::Event &)> on_event) :
         on_event(std::move(on_event)) {}

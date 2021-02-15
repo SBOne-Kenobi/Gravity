@@ -1,6 +1,6 @@
 #include <iostream>
-#include <Utils.hpp>
-#include "Engine.hpp"
+#include <engine/Utils.hpp>
+#include "engine/Engine.hpp"
 
 std::shared_ptr<gravityEngine::Engine> gravityEngine::Engine::engine = nullptr;
 sf::Time gravityEngine::Engine::delta_time = sf::seconds(0);
@@ -19,6 +19,7 @@ gravityEngine::Engine::Engine() :
 
   if (!fps_font.loadFromFile(fps_font_file)) {
     std::cerr << "Fail loading fps_font!" << std::endl;
+    return_status = LOAD_FAIL;
   }
 
   fps_text.setFont(fps_font);
@@ -37,7 +38,7 @@ int gravityEngine::Engine::execute() {
 
   sf::Clock clock;
 
-  while (window.isOpen()) {
+  while (window.isOpen() && return_status == 0) {
     delta_time = clock.restart();
     if (limit_fps && getFPS() > MAX_FPS) {
       sf::sleep(sf::seconds(1. / MAX_FPS) - delta_time);
@@ -49,7 +50,10 @@ int gravityEngine::Engine::execute() {
     draw();
   }
 
-  return 0;
+  if (window.isOpen())
+    window.close();
+
+  return return_status;
 }
 
 void gravityEngine::Engine::input() {
@@ -123,4 +127,12 @@ bool gravityEngine::Engine::isLimitFps() const {
 
 bool gravityEngine::Engine::isShowFps() const {
   return show_fps;
+}
+
+sf::Time gravityEngine::Engine::getDeltaTime() {
+  return delta_time;
+}
+
+void gravityEngine::Engine::addEventListener(std::function<void(const sf::Event &)> on_event) {
+  addEventListener(EventListener(std::move(on_event)));
 }

@@ -1,7 +1,7 @@
 #ifndef GRAVITY_RENDERCOMPONENT_HPP
 #define GRAVITY_RENDERCOMPONENT_HPP
 
-#include "Scene.hpp"
+#include "engine/Scene.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace gravityEngine {

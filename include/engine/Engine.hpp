@@ -6,10 +6,15 @@
 #include <SFML/Graphics.hpp>
 #include "Scene.hpp"
 #include "Environment.hpp"
-#include "RenderComponent.hpp"
+#include "components/RenderComponent.hpp"
 #include "EventListener.hpp"
 
 namespace gravityEngine {
+
+  enum ReturnState {
+    OK = 0,
+    LOAD_FAIL
+  };
 
   class Engine {
   private:
@@ -17,11 +22,12 @@ namespace gravityEngine {
     static std::shared_ptr<Engine> engine;
     static sf::Time delta_time;
 
+    ReturnState return_status = OK;
+
     sf::RenderWindow window;
     sf::Color background_color = sf::Color::Black;
 
     std::unique_ptr<Scene> scene;
-
     std::vector<EventListener> event_listeners;
 
     bool limit_fps = true;
@@ -52,6 +58,8 @@ namespace gravityEngine {
 
     int getFPS() const;
 
+    static sf::Time getDeltaTime();
+
     void setShowFPS(bool show);
 
     bool isLimitFps() const;
@@ -61,6 +69,8 @@ namespace gravityEngine {
     void setLimitFPS(bool set);
 
     void addEventListener(EventListener listener);
+
+    void addEventListener(std::function<void(const sf::Event&)> on_event);
   };
 
 }

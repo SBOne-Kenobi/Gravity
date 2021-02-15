@@ -1,4 +1,4 @@
-#include "Scene.hpp"
+#include "engine/Scene.hpp"
 
 gravityEngine::Object *gravityEngine::Scene::addObject(std::unique_ptr<Object> object) {
   objects.push_back(std::move(object));
@@ -9,6 +9,12 @@ void gravityEngine::Scene::update() {
   for (auto &component : components) {
     if (component) {
       component->update(this);
+    }
+  }
+
+  for (auto &obj : objects) {
+    if (obj) {
+      obj->update();
     }
   }
 }

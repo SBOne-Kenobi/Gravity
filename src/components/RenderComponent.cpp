@@ -1,4 +1,4 @@
-#include "RenderComponent.hpp"
+#include "components/RenderComponent.hpp"
 
 gravityEngine::RenderObjectComponent::RenderObjectComponent() : Transformable() {}
 

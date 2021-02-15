@@ -29,6 +29,13 @@ namespace gravityEngine {
     template<class T,
             std::enable_if_t<std::is_base_of<ObjectComponent, T>::value, bool> = true
     >
+    T *addComponent(T &&component) {
+      return addComponent(std::make_unique<T>(std::move(component)));
+    }
+
+    template<class T,
+            std::enable_if_t<std::is_base_of<ObjectComponent, T>::value, bool> = true
+    >
     T *getComponent() const {
 
       for (auto &component : components) {
@@ -39,7 +46,7 @@ namespace gravityEngine {
       return nullptr;
     }
 
-    void update();
+    virtual void update();
   };
 
 }

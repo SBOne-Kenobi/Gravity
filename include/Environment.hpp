@@ -15,7 +15,7 @@ namespace gravityEngine {
   inline const unsigned int MAX_FPS = 1000;
 
   //Gravity constants
-  inline const float LOCAL_G = 9.8;
+  inline const float CONST_G = 980;
   inline const float GLOBAL_G = 6.67e-11;
 
 }
