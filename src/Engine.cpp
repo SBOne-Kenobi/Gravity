@@ -39,7 +39,7 @@ int gravityEngine::Engine::execute() {
 
   while (window.isOpen()) {
     delta_time = clock.restart();
-    if (getFPS() > MAX_FPS) {
+    if (limit_fps && getFPS() > MAX_FPS) {
       sf::sleep(sf::seconds(1. / MAX_FPS) - delta_time);
       delta_time += clock.restart();
     }
@@ -57,6 +57,9 @@ void gravityEngine::Engine::input() {
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed)
       window.close();
+
+    for (auto &listener : event_listeners)
+      listener.onEvent(event);
   }
 }
 
@@ -76,16 +79,19 @@ void gravityEngine::Engine::draw() {
     }
   }
 
-  if (show_FPS) {
-    auto fps = std::to_string(getFPS());
+  if (show_fps) {
+    int fps = getFPS();
+    std::string fps_string = std::to_string(fps);
+    if (fps == -1)
+      fps_string = "very fast";
 
     //left down position
     fps_position = {WIDTH, HEIGHT};
-    fps_position -= getTextRect(fps, fps_font, fps_size, fps_bold);
+    fps_position -= getTextRect(fps_string, fps_font, fps_size, fps_bold);
     fps_position -= {7, 10}; //bound
 
     fps_text.setPosition(fps_position);
-    fps_text.setString(fps);
+    fps_text.setString(fps_string);
 
     window.draw(fps_text);
   }
@@ -93,12 +99,28 @@ void gravityEngine::Engine::draw() {
   window.display();
 }
 
-unsigned int gravityEngine::Engine::getFPS() const {
+int gravityEngine::Engine::getFPS() const {
   if (delta_time.asMilliseconds() == 0)
-    return MAX_FPS + 1;
+    return limit_fps ? MAX_FPS + 1 : -1;
   return 1000 / delta_time.asMilliseconds();
 }
 
 void gravityEngine::Engine::setShowFPS(bool show) {
-  show_FPS = show;
+  show_fps = show;
+}
+
+void gravityEngine::Engine::setLimitFPS(bool set) {
+  limit_fps = set;
+}
+
+void gravityEngine::Engine::addEventListener(EventListener listener) {
+  event_listeners.push_back(std::move(listener));
+}
+
+bool gravityEngine::Engine::isLimitFps() const {
+  return limit_fps;
+}
+
+bool gravityEngine::Engine::isShowFps() const {
+  return show_fps;
 }

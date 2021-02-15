@@ -6,7 +6,9 @@
 
 namespace gravityEngine {
 
-  class RenderObjectComponent : public ObjectComponent, public sf::Transformable, public sf::Drawable {
+  class RenderObjectComponent : public ObjectComponent,
+                                virtual public sf::Drawable,
+                                virtual public sf::Transformable {
   public:
     RenderObjectComponent();
   };

@@ -7,6 +7,7 @@
 #include "Scene.hpp"
 #include "Environment.hpp"
 #include "RenderComponent.hpp"
+#include "EventListener.hpp"
 
 namespace gravityEngine {
 
@@ -21,11 +22,14 @@ namespace gravityEngine {
 
     std::unique_ptr<Scene> scene;
 
-    bool show_FPS = false;
+    std::vector<EventListener> event_listeners;
+
+    bool limit_fps = true;
+    bool show_fps = false;
     sf::Text fps_text;
     sf::Font fps_font;
     std::string fps_font_file = "arial.ttf";
-    size_t fps_size = 20;
+    size_t fps_size = 15;
     sf::Color fps_color = sf::Color::White;
     bool fps_bold = false;
     sf::Vector2f fps_position;
@@ -46,10 +50,17 @@ namespace gravityEngine {
 
     void loadScene(std::unique_ptr<Scene> sc);
 
-    unsigned int getFPS() const;
+    int getFPS() const;
 
     void setShowFPS(bool show);
 
+    bool isLimitFps() const;
+
+    bool isShowFps() const;
+
+    void setLimitFPS(bool set);
+
+    void addEventListener(EventListener listener);
   };
 
 }
